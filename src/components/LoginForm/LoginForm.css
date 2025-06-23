@@ -1,0 +1,15 @@
+#login-form {
+  background-color: beige;
+  border: 1px solid black;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 32px;
+  width: 50%;
+}
+
+.action {
+  background-color: aquamarine;
+  width: 64px;
+}
