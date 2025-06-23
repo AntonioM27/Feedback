@@ -42,7 +42,6 @@ function Feedback() {
           <p>No reviews yet.</p>
         ) : (
           <ul>
-            {" "}
             {reviews.map((r) => (
               <li>
                 {r.name}: {r.comment}
