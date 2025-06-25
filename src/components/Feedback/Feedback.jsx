@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Feedback() {
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [reviews, setReviews] = useState([]);
 
-  const postComment = () => {
+  useEffect(() => {
+    if (reviews.length === 0) return;
+    alert("Feedback added");
+  }, [reviews]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
     if (name.trim() === "" || comment.trim() === "") {
       alert("Please give name and leave a comment");
       return;
     }
 
-    const newReview = { name, comment };
+    const newReview = { id: Date.now(), name, comment };
     setReviews((prev) => [...prev, newReview]);
 
     setName("");
@@ -21,21 +28,26 @@ function Feedback() {
   return (
     <div>
       <h2>Give us Feedback</h2>
-      <label htmlFor="name'input">Name:</label>
-      <input
-        id="name'input"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      ></input>
-      <label htmlFor="comment'input">Comment:</label>
-      <input
-        id="comment'input"
-        type="text"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      ></input>
-      <button onClick={postComment}>Post</button>
+
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name'input">Name:</label>
+        <input
+          id="name'input"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <label htmlFor="comment'input">Comment:</label>
+        <input
+          id="comment'input"
+          type="text"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+
+        <button type="submit">Post</button>
+      </form>
       <div>
         <h3>Reviews:</h3>
         {reviews.length === 0 ? (
@@ -43,7 +55,7 @@ function Feedback() {
         ) : (
           <ul>
             {reviews.map((r) => (
-              <li>
+              <li key={r.id}>
                 {r.name}: {r.comment}
               </li>
             ))}
